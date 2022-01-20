@@ -1,48 +1,17 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { TestBed } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
-import { callTester, getElements } from './mocks/utils';
 import { AppComponent } from './app.component';
-import { NavigationComponent } from './common/navigation/navigation.component';
-import { EventsListComponent } from './page/events-list/events-list.component';
-import { EventService } from './service/event.service';
-import { Event } from './model/event';
 
 describe('AppComponent', () => {
-  let component: AppComponent;
-  let fixture: ComponentFixture<AppComponent>;
-
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [
         RouterTestingModule
       ],
       declarations: [
-        AppComponent,
-        NavigationComponent,
-        EventsListComponent,
+        AppComponent
       ],
-      providers: [
-        {
-          provide: EventService,
-          useValue: {
-            getAll() {
-              return [
-                new Event(),
-                new Event(),
-                new Event(),
-              ];
-            }
-          }
-        }
-      ],
-    })
-      .compileComponents();
-  });
-
-  beforeEach(() => {
-    fixture = TestBed.createComponent(AppComponent);
-    component = fixture.componentInstance;
-    fixture.detectChanges();
+    }).compileComponents();
   });
 
   it('should create the app', () => {
@@ -51,12 +20,16 @@ describe('AppComponent', () => {
     expect(app).toBeTruthy();
   });
 
-  it(`AppComponent should contain a router-outlet`, () => {
-    const outlets = getElements(fixture, 'router-outlet');
-
-    fixture.whenStable().then(() => {
-      expect(outlets.length > 0).toBeTruthy();
-    });
+  it(`should have as title 'ang-basic-practice006-routing'`, () => {
+    const fixture = TestBed.createComponent(AppComponent);
+    const app = fixture.componentInstance;
+    expect(app.title).toEqual('ang-basic-practice006-routing');
   });
 
+  it('should render title', () => {
+    const fixture = TestBed.createComponent(AppComponent);
+    fixture.detectChanges();
+    const compiled = fixture.nativeElement;
+    expect(compiled.querySelector('.content span').textContent).toContain('ang-basic-practice006-routing app is running!');
+  });
 });
